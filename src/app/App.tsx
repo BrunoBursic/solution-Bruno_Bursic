@@ -1,15 +1,11 @@
-import { ErrorBoundary } from '@/shared/components/ErrorBoundary'
-import { Layout } from '@/shared/components/Layout'
+import { RouterProvider } from 'react-router-dom'
+import { router } from '@/app/router'
 import { Providers } from '@/app/providers'
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <Providers>
-        <Layout>
-          <p>Hello</p>
-        </Layout>
-      </Providers>
-    </ErrorBoundary>
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
   )
 }
