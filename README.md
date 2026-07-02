@@ -1,5 +1,9 @@
 # React + TypeScript + Vite
 
+## Decisions
+
+- Pagination is used for the product list instead of infinite scroll. The current page is stored as `?page=N`, which keeps list navigation shareable, refresh-safe, and predictable for keyboard users.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
