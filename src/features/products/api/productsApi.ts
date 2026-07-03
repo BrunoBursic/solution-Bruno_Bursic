@@ -42,4 +42,9 @@ export const productsApi = {
 
     return response
   },
+  detail: async (id: number, signal?: AbortSignal): Promise<Product> => {
+    return apiGet<Product>(`/products/${id}`, {
+      signal: signal ?? null,
+    })
+  },
 }

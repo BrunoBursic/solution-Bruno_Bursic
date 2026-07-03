@@ -17,6 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/products/${product.id}`}
+      state={{ from: 'list' }}
       className="group flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
     >
       <div className="aspect-square w-full overflow-hidden bg-gray-100">
