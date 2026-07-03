@@ -1,3 +1,5 @@
+import { Skeleton } from '@/shared/components/Skeleton'
+
 interface ListEmptyProps {
   onClearFilters: () => void
 }
@@ -6,20 +8,37 @@ interface ListErrorProps {
   onRetry: () => void
 }
 
+const productCardSkeletons = Array.from({ length: 8 }, (_, index) => index)
+
 export function ListLoading() {
   return (
     <div
       role="status"
       aria-live="polite"
-      className="rounded-lg border border-gray-200 bg-white p-6 text-sm text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+      className="space-y-4"
     >
-      <div className="flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className="h-4 w-4 rounded-full border-2 border-gray-300 border-t-gray-900 motion-safe:animate-spin dark:border-gray-700 dark:border-t-gray-100"
-        />
-        <span className="sr-only">Loading products...</span>
-        <span aria-hidden="true">Loading products...</span>
+      <span className="sr-only">Loading products...</span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+        {productCardSkeletons.map((index) => (
+          <div
+            key={index}
+            data-testid="product-card-skeleton"
+            className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
+          >
+            <Skeleton className="aspect-square w-full rounded-none" />
+            <div className="flex flex-1 flex-col gap-3 p-4">
+              <div className="space-y-2">
+                <Skeleton className="h-6 w-4/5" />
+                <Skeleton className="h-7 w-24" />
+              </div>
+              <div className="mt-auto space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-11/12" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )

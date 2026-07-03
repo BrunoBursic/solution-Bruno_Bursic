@@ -15,7 +15,10 @@ describe('ProductDetailPage', () => {
   it('renders product details on the happy path', async () => {
     renderProductDetail('/products/1')
 
-    expect(screen.getByRole('status')).toHaveTextContent('Loading product...')
+    const status = screen.getByRole('status')
+
+    expect(status).toHaveTextContent('Loading product...')
+    expect(status.querySelectorAll('[data-skeleton="true"]').length).toBeGreaterThan(0)
     expect(await screen.findByRole('heading', {
       name: 'Essence Mascara Lash Princess',
     })).toBeInTheDocument()

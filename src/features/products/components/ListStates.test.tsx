@@ -8,7 +8,11 @@ describe('ListStates', () => {
   it('renders the loading state as a status', () => {
     renderWithProviders(<ListLoading />)
 
-    expect(screen.getByRole('status')).toHaveTextContent('Loading products...')
+    const status = screen.getByRole('status')
+
+    expect(status).toHaveTextContent('Loading products...')
+    expect(screen.getAllByTestId('product-card-skeleton')).toHaveLength(8)
+    expect(status.querySelectorAll('[data-skeleton="true"]').length).toBeGreaterThan(0)
   })
 
   it('renders empty state and calls clear filters', async () => {
