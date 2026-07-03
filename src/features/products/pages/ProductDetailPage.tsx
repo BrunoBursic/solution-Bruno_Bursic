@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { BackToListLink } from '@/features/products/components/BackToListLink'
+import { ProductDetailView } from '@/features/products/components/ProductDetailView'
+import { ProductGallery } from '@/features/products/components/ProductGallery'
 import { useProductQuery } from '@/features/products/hooks/useProductQuery'
 import { NotFoundError } from '@/shared/types/api'
 
@@ -81,31 +83,12 @@ export default function ProductDetailPage() {
 
       <div className="rounded-lg border border-gray-200 bg-white p-6">
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-          <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <p className="text-sm font-medium uppercase tracking-wide text-gray-500">
-                {product.category}
-              </p>
-              <h1 className="mt-2 text-2xl font-bold text-gray-900">{product.title}</h1>
-            </div>
-
-            <p className="text-2xl font-bold text-gray-950">
-              {new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              }).format(product.price)}
-            </p>
-
-            <p className="text-sm leading-6 text-gray-700">{product.description}</p>
-          </div>
+          <ProductGallery
+            title={product.title}
+            thumbnail={product.thumbnail}
+            images={product.images}
+          />
+          <ProductDetailView product={product} />
         </div>
       </div>
     </section>
