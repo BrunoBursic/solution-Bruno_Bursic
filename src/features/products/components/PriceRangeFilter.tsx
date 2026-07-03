@@ -13,11 +13,11 @@ export function PriceRangeFilter({
 }: PriceRangeFilterProps) {
   return (
     <fieldset className="flex w-full flex-col gap-3 sm:max-w-md">
-      <legend className="text-sm font-medium text-gray-900">Price range</legend>
+      <legend className="text-sm font-medium text-gray-900 dark:text-gray-100">Price range</legend>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <label htmlFor="min-price" className="text-sm text-gray-700">
+          <label htmlFor="min-price" className="text-sm text-gray-700 dark:text-gray-300">
             Min price
           </label>
           <input
@@ -29,12 +29,12 @@ export function PriceRangeFilter({
             onChange={(event) => onChange({ min: event.target.value, max: maxValue })}
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? 'price-range-error' : undefined}
-            className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+            className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="max-price" className="text-sm text-gray-700">
+          <label htmlFor="max-price" className="text-sm text-gray-700 dark:text-gray-300">
             Max price
           </label>
           <input
@@ -46,13 +46,13 @@ export function PriceRangeFilter({
             onChange={(event) => onChange({ min: minValue, max: event.target.value })}
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? 'price-range-error' : undefined}
-            className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+            className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
           />
         </div>
       </div>
 
       {error ? (
-        <p id="price-range-error" aria-live="polite" className="text-sm text-red-700">
+        <p id="price-range-error" aria-live="polite" className="text-sm text-red-700 dark:text-red-300">
           Error: {error}
         </p>
       ) : null}

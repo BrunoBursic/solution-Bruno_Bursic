@@ -97,19 +97,19 @@ export default function ProductsListPage() {
   return (
     <section className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Products</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600 dark:text-gray-300">
           Browse products from the catalog.
         </p>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
+      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <button
           type="button"
           aria-expanded={areFiltersOpen}
           aria-controls="product-filters"
           onClick={() => setAreFiltersOpen((isOpen) => !isOpen)}
-          className="flex min-h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none md:hidden"
+          className="flex min-h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none md:hidden dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
         >
           <span>Filters</span>
           <span aria-hidden="true">{areFiltersOpen ? '-' : '+'}</span>

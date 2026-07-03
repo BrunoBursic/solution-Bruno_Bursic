@@ -17,7 +17,7 @@ export function CategoryFilter({
 }: CategoryFilterProps) {
   return (
     <div className="flex w-full flex-col gap-2 sm:max-w-xs">
-      <label htmlFor="category-filter" className="text-sm font-medium text-gray-900">
+      <label htmlFor="category-filter" className="text-sm font-medium text-gray-900 dark:text-gray-100">
         Category
       </label>
       <select
@@ -25,7 +25,7 @@ export function CategoryFilter({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         disabled={isLoading || isError}
-        className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500"
+        className="min-h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950 dark:disabled:bg-gray-800 dark:disabled:text-gray-500"
       >
         <option value="">All categories</option>
         {categories.map((category) => (
@@ -35,7 +35,7 @@ export function CategoryFilter({
         ))}
       </select>
       {isError ? (
-        <p className="text-sm text-red-700">Categories could not be loaded.</p>
+        <p className="text-sm text-red-700 dark:text-red-300">Categories could not be loaded.</p>
       ) : null}
     </div>
   )

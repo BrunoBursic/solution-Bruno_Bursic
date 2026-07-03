@@ -50,7 +50,7 @@ export function ProductGallery({ title, thumbnail, images }: ProductGalleryProps
       role="region"
       aria-label={`${title} image gallery`}
     >
-      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
+      <div className="aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
         <img
           src={selectedImage}
           alt={title}
@@ -72,8 +72,8 @@ export function ProductGallery({ title, thumbnail, images }: ProductGalleryProps
                 aria-pressed={isSelected}
                 className={
                   isSelected
-                    ? 'aspect-square overflow-hidden rounded-md ring-2 ring-gray-900 ring-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2'
-                    : 'aspect-square overflow-hidden rounded-md ring-1 ring-gray-200 transition hover:ring-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none'
+                    ? 'aspect-square overflow-hidden rounded-md ring-2 ring-gray-900 ring-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:ring-gray-100 dark:ring-offset-gray-950 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950'
+                    : 'aspect-square overflow-hidden rounded-md ring-1 ring-gray-200 transition hover:ring-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none dark:ring-gray-700 dark:hover:ring-gray-400 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950'
                 }
               >
                 <img

@@ -43,16 +43,16 @@ export class ErrorBoundary extends Component<
           role="alert"
           className="mx-auto max-w-md p-6 text-center"
         >
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             Something went wrong
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
             {this.state.error?.message ?? 'An unexpected error occurred.'}
           </p>
           <button
             type="button"
             onClick={this.handleReset}
-            className="mt-4 rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="mt-4 rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-300 dark:text-blue-950 dark:hover:bg-blue-200 dark:focus:ring-blue-200 dark:focus:ring-offset-gray-950"
           >
             Try again
           </button>

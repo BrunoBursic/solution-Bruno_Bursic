@@ -33,10 +33,10 @@ export function Pagination({
 
   return (
     <nav
-      className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 sm:flex-row"
+      className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 sm:flex-row dark:border-gray-800"
       aria-label="Product pages"
     >
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-gray-600 dark:text-gray-300">
         Page {currentPage} of {totalPages}
       </p>
 
@@ -45,7 +45,7 @@ export function Pagination({
           type="button"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={!canGoPrevious}
-          className="min-h-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="min-h-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
         >
           Previous
         </button>
@@ -61,8 +61,8 @@ export function Pagination({
               aria-current={isCurrent ? 'page' : undefined}
               className={
                 isCurrent
-                  ? 'min-h-10 min-w-10 rounded-md bg-gray-900 px-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2'
-                  : 'min-h-10 min-w-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2'
+                  ? 'min-h-10 min-w-10 rounded-md bg-gray-900 px-3 text-sm font-semibold text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:bg-gray-100 dark:text-gray-950 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950'
+                  : 'min-h-10 min-w-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950'
               }
             >
               {page}
@@ -74,7 +74,7 @@ export function Pagination({
           type="button"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={!canGoNext}
-          className="min-h-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="min-h-10 rounded-md border border-gray-300 px-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
         >
           Next
         </button>
