@@ -23,6 +23,12 @@ describe('buildListUrl', () => {
     expect(url).toContain('q=phone')
   })
 
+  it('uses the supplied limit when building search URLs', () => {
+    const url = buildListUrl({ q: 'phone', limit: 10 })
+
+    expect(url).toBe('/products/search?limit=10&skip=0&q=phone')
+  })
+
   it('computes skip from page and limit', () => {
     const url = buildListUrl({ page: 3, limit: 10 })
     expect(url).toContain('limit=10')

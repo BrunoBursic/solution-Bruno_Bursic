@@ -2,6 +2,15 @@ import { describe, expect, it } from 'vitest'
 import { parseProductListParams, serializeProductListParams } from './urlParams'
 
 describe('urlParams', () => {
+  it('round-trips all supported params', () => {
+    const initialState = parseProductListParams(
+      new URLSearchParams('q=phone&category=smartphones&minPrice=10&maxPrice=99&page=2'),
+    )
+    const serialized = serializeProductListParams(initialState, {})
+
+    expect(parseProductListParams(serialized)).toEqual(initialState)
+  })
+
   it('parses product list URL params into typed state', () => {
     const state = parseProductListParams(
       new URLSearchParams('q=phone&category=smartphones&minPrice=10&maxPrice=99.5&page=2'),
@@ -39,5 +48,16 @@ describe('urlParams', () => {
     })
 
     expect(params.toString()).toBe('maxPrice=200')
+  })
+
+  it('trims string params and omits the default page', () => {
+    const current = parseProductListParams(new URLSearchParams())
+    const params = serializeProductListParams(current, {
+      q: ' phone ',
+      category: ' smartphones ',
+      page: 1,
+    })
+
+    expect(params.toString()).toBe('q=phone&category=smartphones')
   })
 })

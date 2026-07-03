@@ -36,4 +36,14 @@ describe('normalizeCategories', () => {
       },
     ])
   })
+
+  it('ignores empty slug segments when building names', () => {
+    const categories = normalizeCategories(['home--decoration'])
+
+    expect(categories[0]).toEqual({
+      slug: 'home--decoration',
+      name: 'Home Decoration',
+      url: '/products/category/home--decoration',
+    })
+  })
 })

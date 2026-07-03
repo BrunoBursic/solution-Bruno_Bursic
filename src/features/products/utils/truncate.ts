@@ -3,9 +3,9 @@ export function truncateDescription(text: string, maxLength = 100): string {
     return text
   }
 
-  if (maxLength <= 3) {
+  if (maxLength <= 1) {
     return text.slice(0, maxLength)
   }
 
-  return `${text.slice(0, maxLength - 3).trimEnd()}...`
+  return `${text.slice(0, maxLength - 1).trimEnd()}…`
 }

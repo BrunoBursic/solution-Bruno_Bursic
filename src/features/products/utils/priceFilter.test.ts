@@ -32,6 +32,10 @@ const products: Product[] = [
 ]
 
 describe('priceFilter', () => {
+  it('returns every product when no range is provided', () => {
+    expect(priceFilter(products, {})).toEqual(products)
+  })
+
   it('filters products below the minimum price', () => {
     expect(priceFilter(products, { min: 100 })).toEqual([products[1]])
   })
@@ -42,5 +46,9 @@ describe('priceFilter', () => {
 
   it('keeps products inside an inclusive range', () => {
     expect(priceFilter(products, { min: 99, max: 1299 })).toEqual(products)
+  })
+
+  it('returns an empty list when no products are in range', () => {
+    expect(priceFilter(products, { min: 1300 })).toEqual([])
   })
 })
