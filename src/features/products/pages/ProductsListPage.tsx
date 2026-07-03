@@ -1,43 +1,22 @@
 import { useMemo } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { CategoryFilter } from '@/features/products/components/CategoryFilter'
 import { ListEmpty, ListError, ListLoading } from '@/features/products/components/ListStates'
 import { Pagination } from '@/features/products/components/Pagination'
 import { PriceRangeFilter } from '@/features/products/components/PriceRangeFilter'
 import { ProductGrid } from '@/features/products/components/ProductGrid'
+import { SearchInput } from '@/features/products/components/SearchInput'
 import { useCategoriesQuery } from '@/features/products/hooks/useCategoriesQuery'
+import { useProductListUrlState } from '@/features/products/hooks/useProductListUrlState'
 import { useProductsQuery } from '@/features/products/hooks/useProductsQuery'
 import { priceFilter, type PriceRange } from '@/features/products/utils/priceFilter'
 import { env } from '@/shared/utils/env'
 
-function parsePageParam(value: string | null): number {
-  const parsed = Number(value)
-
-  if (!Number.isInteger(parsed) || parsed < 1) {
-    return 1
-  }
-
-  return parsed
+function formatOptionalNumber(value: number | undefined): string {
+  return value === undefined ? '' : String(value)
 }
 
-function parseOptionalPrice(value: string | null): number | undefined {
-  if (!value) {
-    return undefined
-  }
-
-  const parsed = Number(value)
-
-  if (!Number.isFinite(parsed)) {
-    return undefined
-  }
-
-  return parsed
-}
-
-function getPriceRangeError(minValue: string, maxValue: string): string | null {
-  const min = parseOptionalPrice(minValue)
-  const max = parseOptionalPrice(maxValue)
-
+function getPriceRangeError(min: number | undefined, max: number | undefined): string | null {
   if ((min !== undefined && min < 0) || (max !== undefined && max < 0)) {
     return 'Prices cannot be negative.'
   }
@@ -51,16 +30,17 @@ function getPriceRangeError(minValue: string, maxValue: string): string | null {
 
 export default function ProductsListPage() {
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const currentPage = parsePageParam(searchParams.get('page'))
-  const selectedCategory = searchParams.get('category') ?? ''
-  const minPriceValue = searchParams.get('minPrice') ?? ''
-  const maxPriceValue = searchParams.get('maxPrice') ?? ''
-  const priceRangeError = getPriceRangeError(minPriceValue, maxPriceValue)
+  const { state: urlState, update: updateUrlState } = useProductListUrlState()
+  const minPriceValue = formatOptionalNumber(urlState.minPrice)
+  const maxPriceValue = formatOptionalNumber(urlState.maxPrice)
+  const priceRangeError = getPriceRangeError(urlState.minPrice, urlState.maxPrice)
   const pageSize = env.VITE_DEFAULT_PAGE_SIZE
-  const productQueryParams = selectedCategory
-    ? { category: selectedCategory, page: currentPage, limit: pageSize }
-    : { page: currentPage, limit: pageSize }
+  const productQueryParams = {
+    ...(urlState.q ? { q: urlState.q } : {}),
+    ...(urlState.category ? { category: urlState.category } : {}),
+    page: urlState.page,
+    limit: pageSize,
+  }
   const productsQuery = useProductsQuery(productQueryParams)
   const categoriesQuery = useCategoriesQuery()
   const products = useMemo(() => {
@@ -70,15 +50,13 @@ export default function ProductsListPage() {
       return rawProducts
     }
 
-    const min = parseOptionalPrice(minPriceValue)
-    const max = parseOptionalPrice(maxPriceValue)
     const range: PriceRange = {
-      ...(min !== undefined ? { min } : {}),
-      ...(max !== undefined ? { max } : {}),
+      ...(urlState.minPrice !== undefined ? { min: urlState.minPrice } : {}),
+      ...(urlState.maxPrice !== undefined ? { max: urlState.maxPrice } : {}),
     }
 
     return priceFilter(rawProducts, range)
-  }, [maxPriceValue, minPriceValue, priceRangeError, productsQuery.data?.products])
+  }, [priceRangeError, productsQuery.data?.products, urlState.maxPrice, urlState.minPrice])
   const totalItems = productsQuery.data?.total ?? 0
   const hasProducts = products.length > 0
 
@@ -91,52 +69,28 @@ export default function ProductsListPage() {
   }
 
   const handlePageChange = (page: number) => {
-    const nextParams = new URLSearchParams(searchParams)
-
-    if (page <= 1) {
-      nextParams.delete('page')
-    } else {
-      nextParams.set('page', String(page))
-    }
-
-    setSearchParams(nextParams)
+    updateUrlState({ page }, { replace: false })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleCategoryChange = (category: string) => {
-    const nextParams = new URLSearchParams(searchParams)
+    updateUrlState({ category, page: null })
+  }
 
-    if (category) {
-      nextParams.set('category', category)
-    } else {
-      nextParams.delete('category')
-    }
-
-    nextParams.delete('page')
-    setSearchParams(nextParams, { replace: true })
+  const handleSearchChange = (query: string) => {
+    updateUrlState({ q: query, page: null })
   }
 
   const handlePriceRangeChange = (nextRange: { min: string; max: string }) => {
-    const nextParams = new URLSearchParams(searchParams)
-    const nextError = getPriceRangeError(nextRange.min, nextRange.max)
+    const nextMin = nextRange.min ? Number(nextRange.min) : undefined
+    const nextMax = nextRange.max ? Number(nextRange.max) : undefined
+    const nextError = getPriceRangeError(nextMin, nextMax)
 
-    if (nextRange.min) {
-      nextParams.set('minPrice', nextRange.min)
-    } else {
-      nextParams.delete('minPrice')
-    }
-
-    if (nextRange.max) {
-      nextParams.set('maxPrice', nextRange.max)
-    } else {
-      nextParams.delete('maxPrice')
-    }
-
-    if (!nextError) {
-      nextParams.delete('page')
-    }
-
-    setSearchParams(nextParams, { replace: true })
+    updateUrlState({
+      minPrice: nextRange.min || null,
+      maxPrice: nextRange.max || null,
+      ...(!nextError ? { page: null } : {}),
+    })
   }
 
   return (
@@ -149,9 +103,14 @@ export default function ProductsListPage() {
       </div>
 
       <div className="grid gap-4 rounded-lg border border-gray-200 bg-white p-4 md:grid-cols-2">
+        <SearchInput
+          key={urlState.q}
+          value={urlState.q}
+          onDebouncedChange={handleSearchChange}
+        />
         <CategoryFilter
           categories={categoriesQuery.data ?? []}
-          value={selectedCategory}
+          value={urlState.category}
           isLoading={categoriesQuery.isLoading}
           isError={categoriesQuery.isError}
           onChange={handleCategoryChange}
@@ -176,7 +135,7 @@ export default function ProductsListPage() {
         <div className="space-y-6">
           <ProductGrid products={products} />
           <Pagination
-            currentPage={currentPage}
+            currentPage={urlState.page}
             totalItems={totalItems}
             pageSize={pageSize}
             onPageChange={handlePageChange}
