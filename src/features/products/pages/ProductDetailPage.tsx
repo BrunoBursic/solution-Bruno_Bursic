@@ -63,7 +63,7 @@ export default function ProductDetailPage() {
         <button
           type="button"
           onClick={() => void productQuery.refetch()}
-          className="mt-4 rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2"
+          className="mt-4 min-h-10 rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 motion-reduce:transition-none"
         >
           Retry
         </button>
@@ -81,7 +81,7 @@ export default function ProductDetailPage() {
     <section className="space-y-6">
       <BackToListLink />
 
-      <div className="rounded-lg border border-gray-200 bg-white p-6">
+      <div className="rounded-lg border border-gray-200 bg-white p-4 sm:p-6">
         <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
           <ProductGallery
             title={product.title}

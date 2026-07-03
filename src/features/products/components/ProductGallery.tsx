@@ -47,6 +47,7 @@ export function ProductGallery({ title, thumbnail, images }: ProductGalleryProps
     <div
       className="space-y-3"
       onKeyDown={handleKeyDown}
+      role="region"
       aria-label={`${title} image gallery`}
     >
       <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
@@ -71,8 +72,8 @@ export function ProductGallery({ title, thumbnail, images }: ProductGalleryProps
                 aria-pressed={isSelected}
                 className={
                   isSelected
-                    ? 'aspect-square overflow-hidden rounded-md ring-2 ring-gray-900 ring-offset-2 focus:outline-none'
-                    : 'aspect-square overflow-hidden rounded-md ring-1 ring-gray-200 transition hover:ring-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2'
+                    ? 'aspect-square overflow-hidden rounded-md ring-2 ring-gray-900 ring-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2'
+                    : 'aspect-square overflow-hidden rounded-md ring-1 ring-gray-200 transition hover:ring-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none'
                 }
               >
                 <img

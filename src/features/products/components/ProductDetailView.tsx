@@ -13,10 +13,12 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
   return (
     <div className="space-y-5">
       <div>
-        <p className="text-sm font-medium uppercase text-gray-500">
+        <p className="break-words text-sm font-medium uppercase text-gray-500">
           {product.category}
         </p>
-        <h1 className="mt-2 text-2xl font-bold text-gray-900">{product.title}</h1>
+        <h1 className="mt-2 break-words text-2xl font-bold text-gray-900">
+          {product.title}
+        </h1>
       </div>
 
       <p className="text-2xl font-bold text-gray-950">
@@ -24,15 +26,17 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
       </p>
 
       <dl className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-lg border border-gray-200 p-3">
+        <div className="min-w-0 rounded-lg border border-gray-200 p-3">
           <dt className="text-xs font-medium uppercase text-gray-500">Rating</dt>
           <dd className="mt-1 text-base font-semibold text-gray-900">{product.rating}</dd>
         </div>
-        <div className="rounded-lg border border-gray-200 p-3">
+        <div className="min-w-0 rounded-lg border border-gray-200 p-3">
           <dt className="text-xs font-medium uppercase text-gray-500">Category</dt>
-          <dd className="mt-1 text-base font-semibold text-gray-900">{product.category}</dd>
+          <dd className="mt-1 break-words text-base font-semibold text-gray-900">
+            {product.category}
+          </dd>
         </div>
-        <div className="rounded-lg border border-gray-200 p-3">
+        <div className="min-w-0 rounded-lg border border-gray-200 p-3">
           <dt className="text-xs font-medium uppercase text-gray-500">Stock</dt>
           <dd className="mt-1 text-base font-semibold text-gray-900">{product.stock}</dd>
         </div>

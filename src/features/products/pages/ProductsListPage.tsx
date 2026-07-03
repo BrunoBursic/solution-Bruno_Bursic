@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CategoryFilter } from '@/features/products/components/CategoryFilter'
 import { ListEmpty, ListError, ListLoading } from '@/features/products/components/ListStates'
@@ -30,6 +30,7 @@ function getPriceRangeError(min: number | undefined, max: number | undefined): s
 
 export default function ProductsListPage() {
   const navigate = useNavigate()
+  const [areFiltersOpen, setAreFiltersOpen] = useState(false)
   const { state: urlState, update: updateUrlState } = useProductListUrlState()
   const minPriceValue = formatOptionalNumber(urlState.minPrice)
   const maxPriceValue = formatOptionalNumber(urlState.maxPrice)
@@ -102,25 +103,45 @@ export default function ProductsListPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 rounded-lg border border-gray-200 bg-white p-4 md:grid-cols-2">
-        <SearchInput
-          key={urlState.q}
-          value={urlState.q}
-          onDebouncedChange={handleSearchChange}
-        />
-        <CategoryFilter
-          categories={categoriesQuery.data ?? []}
-          value={urlState.category}
-          isLoading={categoriesQuery.isLoading}
-          isError={categoriesQuery.isError}
-          onChange={handleCategoryChange}
-        />
-        <PriceRangeFilter
-          minValue={minPriceValue}
-          maxValue={maxPriceValue}
-          error={priceRangeError}
-          onChange={handlePriceRangeChange}
-        />
+      <div className="rounded-lg border border-gray-200 bg-white p-4">
+        <button
+          type="button"
+          aria-expanded={areFiltersOpen}
+          aria-controls="product-filters"
+          onClick={() => setAreFiltersOpen((isOpen) => !isOpen)}
+          className="flex min-h-10 w-full items-center justify-between rounded-md border border-gray-300 px-3 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none md:hidden"
+        >
+          <span>Filters</span>
+          <span aria-hidden="true">{areFiltersOpen ? '-' : '+'}</span>
+        </button>
+
+        <div
+          id="product-filters"
+          className={
+            areFiltersOpen
+              ? 'mt-4 grid gap-4 md:mt-0 md:grid-cols-2'
+              : 'hidden md:grid md:grid-cols-2 md:gap-4'
+          }
+        >
+          <SearchInput
+            key={urlState.q}
+            value={urlState.q}
+            onDebouncedChange={handleSearchChange}
+          />
+          <CategoryFilter
+            categories={categoriesQuery.data ?? []}
+            value={urlState.category}
+            isLoading={categoriesQuery.isLoading}
+            isError={categoriesQuery.isError}
+            onChange={handleCategoryChange}
+          />
+          <PriceRangeFilter
+            minValue={minPriceValue}
+            maxValue={maxPriceValue}
+            error={priceRangeError}
+            onChange={handlePriceRangeChange}
+          />
+        </div>
       </div>
 
       {productsQuery.isLoading ? <ListLoading /> : null}

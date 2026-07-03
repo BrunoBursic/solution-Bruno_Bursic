@@ -26,7 +26,7 @@ export function BackToListLink() {
     <button
       type="button"
       onClick={handleBack}
-      className="inline-flex min-h-10 items-center rounded-md border border-gray-300 px-4 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+      className="inline-flex min-h-10 items-center rounded-md border border-gray-300 px-4 text-sm font-semibold text-gray-800 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none"
     >
       Back to products
     </button>

@@ -18,7 +18,8 @@ export function ListLoading() {
           aria-hidden="true"
           className="h-4 w-4 rounded-full border-2 border-gray-300 border-t-gray-900 motion-safe:animate-spin"
         />
-        <span>Loading products...</span>
+        <span className="sr-only">Loading products...</span>
+        <span aria-hidden="true">Loading products...</span>
       </div>
     </div>
   )
@@ -34,7 +35,7 @@ export function ListEmpty({ onClearFilters }: ListEmptyProps) {
       <button
         type="button"
         onClick={onClearFilters}
-        className="mt-5 rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2"
+        className="mt-5 min-h-10 rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none"
       >
         Clear filters
       </button>
@@ -55,7 +56,7 @@ export function ListError({ onRetry }: ListErrorProps) {
       <button
         type="button"
         onClick={onRetry}
-        className="mt-4 rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2"
+        className="mt-4 min-h-10 rounded-md bg-red-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-2 motion-reduce:transition-none"
       >
         Retry
       </button>
