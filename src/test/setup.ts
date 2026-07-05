@@ -15,6 +15,7 @@ beforeAll(() => {
 
 afterEach(() => {
   cleanup()
+  localStorage.clear()
   server.resetHandlers()
 })
 

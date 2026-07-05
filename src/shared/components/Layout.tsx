@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { useAuth } from '@/features/auth/components/useAuth'
 import { ThemeToggle } from '@/shared/components/ThemeToggle'
 
 interface LayoutProps {
@@ -5,6 +7,8 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
+  const { isAuthenticated, logout } = useAuth()
+
   return (
     <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       <a
@@ -15,11 +19,41 @@ export function Layout({ children }: LayoutProps) {
       </a>
 
       <header className="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
             Product Catalog
           </span>
-          <ThemeToggle />
+          <nav className="flex flex-wrap items-center gap-2 text-sm font-medium" aria-label="Primary navigation">
+            <Link
+              to="/products"
+              className="rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
+            >
+              Products
+            </Link>
+            <Link
+              to="/favorites"
+              className="rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
+            >
+              Favorites
+            </Link>
+            {isAuthenticated ? (
+              <button
+                type="button"
+                onClick={logout}
+                className="rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="rounded-md px-3 py-2 text-gray-700 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2 motion-reduce:transition-none dark:text-gray-200 dark:hover:bg-gray-800 dark:focus-visible:ring-gray-100 dark:focus-visible:ring-offset-gray-950"
+              >
+                Login
+              </Link>
+            )}
+            <ThemeToggle />
+          </nav>
         </div>
       </header>
 

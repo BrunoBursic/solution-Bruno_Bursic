@@ -1,8 +1,10 @@
 import { env } from '@/shared/utils/env'
 import { ApiError, NotFoundError, NetworkError } from '@/shared/types/api'
+import { getStoredAccessToken } from '@/features/auth/utils/authSession'
 
-export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
+async function apiRequest<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${env.VITE_API_BASE_URL}${path}`
+  const accessToken = getStoredAccessToken()
 
   let response: Response
   try {
@@ -10,6 +12,7 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
       ...init,
       headers: {
         Accept: 'application/json',
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...init?.headers,
       },
     })
@@ -29,4 +32,20 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   return (await response.json()) as T
+}
+
+export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
+  return apiRequest<T>(path, init)
+}
+
+export async function apiPost<T>(path: string, body: unknown, init?: RequestInit): Promise<T> {
+  return apiRequest<T>(path, {
+    ...init,
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      ...init?.headers,
+    },
+  })
 }

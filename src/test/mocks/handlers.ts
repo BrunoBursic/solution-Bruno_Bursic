@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw'
+import type { LoginResponse } from '@/features/auth/types/auth'
 import type { Category, Product, ProductsResponse } from '@/features/products/types/product'
 
 export const apiBaseUrl = 'https://dummyjson.com'
@@ -70,6 +71,29 @@ const categoryFixtures: Category[] = [
   },
 ]
 
+export const loginFixture: LoginResponse = {
+  id: 1,
+  username: 'emilys',
+  email: 'emily@example.com',
+  firstName: 'Emily',
+  lastName: 'Johnson',
+  gender: 'female',
+  image: 'https://example.com/emily.jpg',
+  accessToken: 'test-access-token',
+  refreshToken: 'test-refresh-token',
+}
+
+function isLoginRequestBody(value: unknown): value is { username: string; password: string } {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'username' in value &&
+    'password' in value &&
+    typeof value.username === 'string' &&
+    typeof value.password === 'string'
+  )
+}
+
 function paginateProducts(products: Product[], url: URL): ProductsResponse {
   const limit = Number(url.searchParams.get('limit') ?? products.length)
   const skip = Number(url.searchParams.get('skip') ?? 0)
@@ -83,6 +107,20 @@ function paginateProducts(products: Product[], url: URL): ProductsResponse {
 }
 
 export const handlers = [
+  http.post(`${apiBaseUrl}/auth/login`, async ({ request }) => {
+    const body: unknown = await request.json()
+
+    if (
+      !isLoginRequestBody(body) ||
+      body.username !== 'emilys' ||
+      body.password !== 'emilyspass'
+    ) {
+      return HttpResponse.json({ message: 'Invalid credentials' }, { status: 400 })
+    }
+
+    return HttpResponse.json(loginFixture)
+  }),
+
   http.get(`${apiBaseUrl}/products/search`, ({ request }) => {
     const url = new URL(request.url)
     const query = url.searchParams.get('q')?.toLowerCase() ?? ''
